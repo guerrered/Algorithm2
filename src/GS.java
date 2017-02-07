@@ -54,7 +54,7 @@ public class GS {
 						int oldPartner = currentMatchesW[woman -1];//get old partner
 						currentMatchesW[woman -1] = male;//replace from woman perspective
 						currentMatchesM[male - 1] = woman;//add woman
-//						currentMatchesM[oldPartner -1]++;//point old partner to prospective partner
+						currentMatchesM[oldPartner -1] = 0;//point old partner to prospective partner
 						male++;
 						break;//replace partners
 					}
@@ -65,6 +65,16 @@ public class GS {
 					i++;
 				}
 			}	
+			if(male > n){//check singles before going out
+				i = 1;
+				while (i < n){
+					if(currentMatchesM[i] == 0){
+						male = i ;
+						break;
+					}
+					i++;
+				}
+			}
 		}
 		
 		i =0;//array to return 
