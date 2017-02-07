@@ -1,16 +1,16 @@
 
 public class GS {
 	public static void main(String [] args){
-		int[][] mPref = generatePreference(10);
-		int[][] wPref = generatePreference(10);
+		int[][] mPref = generatePreference(5);
+		int[][] wPref = generatePreference(5);
 		System.out.println("\nMen's: \n");
-		Printer(mPref, 10);
+		Printer(mPref, 5);
 		System.out.println("\nWomen's: \n");
-		Printer(wPref, 10);
+		Printer(wPref, 5);
 	
-		int[][] Matching = algorithm(mPref, wPref, 10);
+		int[][] Matching = algorithm(mPref, wPref, 5);
 		System.out.println("The stable matching is : \n");
-		matchPrinter(Matching, 10);
+		matchPrinter(Matching, 5);
 	
 	}
 	
@@ -40,46 +40,38 @@ public class GS {
 		
 		
 		int male = 1;
-		while(male < n){
+		while(male <= n){
 			int nextChoice = currentMatchesM[male-1];
 			int woman = mList[male-1][nextChoice];//return 1-10
-			if(currentMatchesW[woman-1] == 0){//no pair woman accepts first suitor
-				i =0;
-				while(i < n){//find the index of the man from woman POV
-					if(wList[woman-1][i] == male){
-						currentMatchesW[woman-1] = i;
-						currentMatchesM[male-1] = nextChoice;
-						male++;//go to next guy
-						break;
-					}
-					i++;
-				}
+			if(currentMatchesW[woman-1] == 0){//no pair, woman accepts first suitor
+				currentMatchesW[woman-1] = male;
+				currentMatchesM[male-1] = woman;
+				male++;//go to next guy
 			}
-			else{//woman already matched
+			else{//woman already matched see how new suitor is liked
 				i =0;
 				while(i < n){//find the index of the new man from woman POV
-					if(wList[woman-1][i] == male){
+					if(wList[woman-1][i] == male){//found suitor before current partner, replace partner
+						int oldPartner = currentMatchesW[woman -1];//get old partner
+						currentMatchesW[woman -1] = male;//replace from woman perspective
+						currentMatchesM[male - 1] = woman;//add woman
+					//	currentMatchesM[oldPartner -1] = mList[oldPartner][];//point old partner to prospective partner
+						male++;
+						break;//replace partners
+					}
+					else if(wList[woman-1][i] == currentMatchesW[woman -1]){//current partner found ahead of suitor
+						currentMatchesM[male -1]++;//point suitor to next prospect
 						break;
 					}
 					i++;
 				}
-				if(i < currentMatchesW[woman-1]){//if she likes new guy better match with him
-					currentMatchesM[currentMatchesW[woman-1]]++;//that man will look to next person;
-					currentMatchesW[woman-1] = i;
-					male++;//go to next guy
-				}
-				else{//not liked
-					currentMatchesM[male-1]++;//look to next woman in list
-				}
-			}
-			if(male == n){//check if done no repeats
-				
 			}
 		}
-		i =0;
+		
+		i =0;//array to return 
 		while(i < n){
 			match[i][0] = i + 1;
-			match[i][1] = mList[i][currentMatchesM[i]];
+			match[i][1] = currentMatchesM[i];
 			
 			i++;
 		}
