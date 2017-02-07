@@ -38,7 +38,6 @@ public class GS {
 			i++;
 		}
 		
-		
 		int male = 1;
 		while(male <= n){
 			int nextChoice = currentMatchesM[male-1];
@@ -55,7 +54,7 @@ public class GS {
 						int oldPartner = currentMatchesW[woman -1];//get old partner
 						currentMatchesW[woman -1] = male;//replace from woman perspective
 						currentMatchesM[male - 1] = woman;//add woman
-					//	currentMatchesM[oldPartner -1] = mList[oldPartner][];//point old partner to prospective partner
+//						currentMatchesM[oldPartner -1]++;//point old partner to prospective partner
 						male++;
 						break;//replace partners
 					}
@@ -65,7 +64,7 @@ public class GS {
 					}
 					i++;
 				}
-			}
+			}	
 		}
 		
 		i =0;//array to return 
