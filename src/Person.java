@@ -2,7 +2,6 @@
 public class Person {
 	int myIndex = 0;
 	boolean single = true;
-	Person match;
 	
 	public Person(){
 	}

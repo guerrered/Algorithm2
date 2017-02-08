@@ -1,16 +1,16 @@
 
 public class GS {
 	public static void main(String [] args){
-		int[][] mPref = generatePreference(5);
-		int[][] wPref = generatePreference(5);
+		int[][] mPref = generatePreference(10);
+		int[][] wPref = generatePreference(10);
 		System.out.println("\nMen's: \n");
-		Printer(mPref, 5);
+		Printer(mPref, 10);
 		System.out.println("\nWomen's: \n");
-		Printer(wPref, 5);
+		Printer(wPref, 10);
 	
-		int[][] Matching = algorithm(mPref, wPref, 5);
+		int[][] Matching = algorithm(mPref, wPref, 10);
 		System.out.println("The stable matching is : \n");
-		matchPrinter(Matching, 5);
+		matchPrinter(Matching, 10);
 	
 	}
 	//pairing with first suitor sets wrong index
