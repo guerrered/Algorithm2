@@ -46,7 +46,7 @@ public class GS {
 						if(wList[woman-1][i] == male){//found suitor before current partner, replace partner
 							int oldPartner = currentMatchesW[woman -1].getMyIndex();//get old partner
 							currentMatchesW[woman -1].setIndex(male);//replace from woman perspective
-							//currentMatchesM[male - 1].setIndex(woman);//add woman
+							currentMatchesM[male - 1].setMatch();//add woman
 							currentMatchesM[oldPartner -1].setSingle();//set old partner to single & point to next woman
 							male++;// go to next man
 							break;
