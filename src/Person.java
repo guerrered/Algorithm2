@@ -24,7 +24,7 @@ public class Person {
 	public void incrementIndex(){
 		myIndex++;
 	}
-	public Person getMatch(){
-		return match;
+	public void setMatch(){
+		single = false;
 	}
 }

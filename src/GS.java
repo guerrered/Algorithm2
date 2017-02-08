@@ -31,48 +31,54 @@ public class GS {
 		int male = 1;
 		int fullList = 0;
 		while(fullList < n){//first round
-			int woman = mList[male -1][currentMatchesM[male -1].getMyIndex()];//mans next choice
-			if(currentMatchesW[woman-1].isSingle()){//no pair, woman accepts first suitor
-				i = 0;
-				currentMatchesW[woman-1].setIndex(male);//index of her partner
-				currentMatchesM[male-1].setIndex(woman);//index of partner
-				fullList++;
-				male++;//go to next guy
-			}
-			else{//woman already matched see how new suitor is liked
-				i =0;
-				while(i < n){//find the index of the new man from woman POV
-					if(wList[woman-1][i] == male){//found suitor before current partner, replace partner
-						int oldPartner = currentMatchesW[woman -1].getMyIndex();//get old partner
-						currentMatchesW[woman -1].setIndex(male);//replace from woman perspective
-						currentMatchesM[male - 1].setIndex(woman);//add woman
-						currentMatchesM[oldPartner -1].setSingle();//set old partner to single point to next woman
-						male++;// go to next man
-						break;//replace partners
-					}
-					else if(wList[woman-1][i] == currentMatchesW[woman -1].getMyIndex()){//current partner found ahead of suitor
-						currentMatchesM[male -1].incrementIndex();//point suitor to next prospect
-						break;
-					}
-					i++;
+			if(currentMatchesM[male-1].isSingle()){
+				int woman = mList[male -1][currentMatchesM[male -1].getMyIndex()];//mans next choice
+				if(currentMatchesW[woman-1].isSingle()){//no pair, woman accepts first suitor
+					currentMatchesW[woman-1].setIndex(male);//index of her partner
+					currentMatchesM[male-1].setMatch();//index of partner
+					
+					fullList++;
+					male++;//go to next guy
 				}
-			}	
+				else{//woman already matched see how new suitor is liked
+					i =0;
+					while(i < n){//find the index of the new man from woman POV
+						if(wList[woman-1][i] == male){//found suitor before current partner, replace partner
+							int oldPartner = currentMatchesW[woman -1].getMyIndex();//get old partner
+							currentMatchesW[woman -1].setIndex(male);//replace from woman perspective
+							//currentMatchesM[male - 1].setIndex(woman);//add woman
+							currentMatchesM[oldPartner -1].setSingle();//set old partner to single & point to next woman
+							male++;// go to next man
+							break;
+						}
+						else if(wList[woman-1][i] == currentMatchesW[woman -1].getMyIndex()){//current partner found ahead of suitor
+							currentMatchesM[male -1].incrementIndex();//point suitor to next prospect
+							break;
+						}
+						i++;
+					}
+				}	
+			}
+			else{
+				male++;
+			}
 			if(male > n){
 				i = 0;
 				while( i < n){
 					if(currentMatchesM[i].isSingle()){
-						male =  i + 1;
+						male =  i+1;
 						break;
 					}
 					i++;
 				}
+				if( i  >=n){break;}//no singles
 			}
 		}
 		
 		i =0;//array to return 
 		while(i < n){
 			match[i][0] = i + 1;
-			match[i][1] = currentMatchesM[i].getMyIndex();
+			match[i][1] = mList[i][currentMatchesM[i].getMyIndex()];
 			
 			i++;
 		}
